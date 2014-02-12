@@ -34,9 +34,14 @@ class Raynetcrm {
      * Inserts lead into RAYNET CRM via curl.
      *
      * @param array $data data describing lead
+     * @param array $notifyUserList list of users who receive notifications
+     * @param string $notifyUserMessage message to be shown in notification
      * @return bool true on success
      */
-    public function insertLead(array $data) {
+    public function insertLead(array $data, array $notifyUserList = array(), $notifyUserMessage = '') {
+        $data['notifyUserList'] = $notifyUserList;
+        $data['notifyMessage'] = $notifyUserMessage;
+
         $response = $this->sendPost($this->buildUrl('insertLead'), $data);
         if ($response !== false && $this->isSuccessResponse($response)) {
             return true;

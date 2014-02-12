@@ -36,12 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'facebook' => $_REQUEST['facebook'],
             'fax' => $_REQUEST['fax'],
             'otherContacts' => $_REQUEST['otherContacts']
-        ),
-        'notifyUserList' => array('emailpronotifikace@email'),
-        'notifyMessage' => 'Tato zprava se zobrazi v CRM jako notifikace'
+        )
     );
 
-    $result = $crm->insertLead($data);
+    $result = $crm->insertLead($data, array('emailknotifikaci@email'), 'Zájemce byl vytvořen z webu');
 }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
