@@ -4,11 +4,11 @@ include '../Raynetcrm.php';
 $result = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $instanceName = 'nazevVasiInstance '; //Zde vlozte nazev Vasi instance
-    $userName = 'prihlasovaciEmail@email'; //Zde vlozte uzivatelske jmeno pro vytvareni zaznamu
-    $password = 'prihlasovaciHeslo'; //Zde vlozte heslo pro uzivatele k vytvareni zaznamu
+    $instanceName = 'nazevinstance'; //Zde vlozte nazev Vasi instance
+    $userName = 'uzivatel@uzivatel.cz'; //Zde vlozte uzivatelske jmeno pro vytvareni zaznamu
+    $apiKey = 'apiKlic'; //Zde API klic uzivatele k vytvoreni zaznamu (Detail uzivatele -> Zmenit Opravneni -> Vygenerovat novy API klic)
 
-    $crm = new Raynetcrm($instanceName, $userName, $password);
+    $crm = new Raynetcrm($instanceName, $userName, $apiKey);
     $data = array(
         'subject' => $_REQUEST['subject'],
         'priority' => $_REQUEST['priority'],

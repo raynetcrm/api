@@ -15,19 +15,19 @@ class Raynetcrm {
 
     private $fInstanceName;
     private $fUserName;
-    private $fPassword;
+    private $fApiKey;
 
     /**
      * All records created through this API are owned by user specified through constructor.
      *
      * @param $instanceName instance name -> can be found in URL e.g. https://raynet.cz/myinstance -> myinstance
      * @param $userName
-     * @param $password
+     * @param $apiKey generated token from application (Users` profile -> Change security -> Reset new API key)
      */
-    public function __construct($instanceName, $userName, $password) {
+    public function __construct($instanceName, $userName, $apiKey) {
         $this->fInstanceName = $instanceName;
         $this->fUserName = $userName;
-        $this->fPassword = $password;
+        $this->fApiKey = $apiKey;
     }
 
     /**
@@ -103,9 +103,9 @@ class Raynetcrm {
     }
 
     /**
-     * @return string base auth formatted username:password string
+     * @return string base auth formatted username:apitoken string
      */
     private function buildAuthInfo() {
-        return sprintf('%s:%s', $this->fUserName, $this->fPassword);
+        return sprintf('%s:%s', $this->fUserName, $this->fApiKey);
     }
 }
