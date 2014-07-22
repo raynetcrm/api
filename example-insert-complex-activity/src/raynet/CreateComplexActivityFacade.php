@@ -13,6 +13,17 @@ class CreateComplexActivityFacade {
         $this->fRaynetCrmRestClient = new RaynetCrmRestClient($instanceName, $userName, $apiKey);
     }
 
+    /**
+     * Creates an activity with company and person context records. If company does not exist insertion of the record is attempted. Same with the person.
+     * API also creates relationship between company and person if possible. If any record is found, then context for activity is created (no new record for person nor company is created).
+     * For any further details check https://s3-eu-west-1.amazonaws.com/static-raynet/webroot/api-doc.html
+     * as the class is based on RAYNET Cloud CRM REST API.
+     *
+     * @param array $activityData array containing an activity to be created, must contain at least: priority, title, scheduledFrom, scheduledTill
+     * @param array $personData array containing a person to be created, must contain at least: firstName, lastName, owner, contactInfo -> email
+     * @param array $companyData array containing a company to be created, must contain at least: name, owner, rating, state, role and one address with a name specified.
+     * @param $positionToCompany string a position for newly created relationship between company and person
+     */
     public function createComplexActivityWithPersonOrCompanyContext(array $activityData, array $personData, array $companyData, $positionToCompany) {
         $companyId = null;
         if ($this->isCompanyPresentInCompanyData($companyData)) {

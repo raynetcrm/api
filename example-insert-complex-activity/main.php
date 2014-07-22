@@ -1,4 +1,8 @@
 <?
+/**
+ * Just an example implementation of service which allows to create complex activity with context records.
+ * It is highly recommended to go through CreateComplexActivityFacade to understand logic behind.
+ */
 
 require 'vendor/autoload.php';
 

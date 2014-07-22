@@ -9,8 +9,10 @@ use Zend\Json\Json;
 class RaynetCrmRestClient {
 
     const RAYNETCRM_URL = 'https://raynet.cz/%s/api/v1/service/%s';
+
     const HTTP_METHOD_GET = 'GET';
     const HTTP_METHOD_PUT = 'PUT';
+
     const HTTP_CODE_OK = 200;
     const HTTP_CODE_CREATED = 201;
 
@@ -25,6 +27,8 @@ class RaynetCrmRestClient {
     }
 
     /**
+     * Requests RAYNET Cloud CRM REST API. Check https://s3-eu-west-1.amazonaws.com/static-raynet/webroot/api-doc.html for any further details.
+     *
      * @param $serviceName string URL service name
      * @param $method string Http method
      * @param $request array request
@@ -49,16 +53,34 @@ class RaynetCrmRestClient {
         return $client->send();
     }
 
+    /**
+     * A helper method for REST API URL building
+     *
+     * @param $serviceName string Service to be requested
+     * @return string Specific URL for API call
+     */
     private function buildUrl($serviceName) {
         return sprintf(self::RAYNETCRM_URL, $serviceName);
     }
 
+    /**
+     * Finds personId by email
+     *
+     * @param $email
+     * @return int personId
+     */
     public function findPerson($email) {
         return $this->findRecordId('person', array(
             'contactInfo.email' => '"' . $email . '"'
         ));
     }
 
+    /**
+     * Finds primary address id of a company by its id.
+     *
+     * @param $companyId
+     * @return int primaryAddressId
+     */
     public function findCompanyPrimaryAddressId($companyId) {
         $response = $this->callRaynetcrmRestApi('company/' . $companyId, 'GET', array());
 
@@ -69,6 +91,12 @@ class RaynetCrmRestClient {
         }
     }
 
+    /**
+     * Finds companyId by by its name
+     *
+     * @param $name
+     * @return int companyId
+     */
     public function findCompanyId($name) {
         return $this->findRecordId('company', array(
             'name' => '"' . $name  . '"'
@@ -87,6 +115,14 @@ class RaynetCrmRestClient {
         $this->createRecord($activityType, $activityData);
     }
 
+    /**
+     * An internal method utilizing RAYNET Cloud CRM REST API for new record creation.
+     *
+     * @param $entityName string a name of entity
+     * @param array $data request data
+     * @return int id of newly created record
+     * @throws RaynetGenericException when an error occurs
+     */
     private function createRecord($entityName, array $data) {
         $response = $this->callRaynetcrmRestApi($entityName, self::HTTP_METHOD_PUT, $data);
 
@@ -97,6 +133,13 @@ class RaynetCrmRestClient {
         }
     }
 
+    /**
+     * An internal method utilizing RAYNET Cloud CRM REST API for retrieving entity id by search criteria
+     *
+     * @param $entityName
+     * @param array $criteria
+     * @return int id of found record
+     */
     private function findRecordId($entityName, array $criteria) {
         $response = $this->callRaynetcrmRestApi($entityName, self::HTTP_METHOD_GET, $criteria);
 

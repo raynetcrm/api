@@ -1,0 +1,3 @@
+# Vytvoření aktivity s navázanou firmou a osobou
+Tato velmi jednoduchá implementace zobrazuje možnosti vytvoření aktivity s navázanou firmou a osobou za pomocí RAYNET Cloud CRM REST API (https://s3-eu-west-1.amazonaws.com/static-raynet/webroot/api-doc.html).
+Example by měl vyhovět jako plug&play řešení, silně se ovšem doporučuje projít si kód pro pochopení základních principů a myšlenky pro logiku vytváření. Jedná se o standardní composer projekt a pro jeho spuštění je pouze zapotřebí spustit příkaz php composer.phar install.
