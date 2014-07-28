@@ -8,7 +8,7 @@ use Zend\Json\Json;
 
 class RaynetCrmRestClient {
 
-    const RAYNETCRM_URL = 'https://raynet.cz/%s/api/v1/service/%s';
+    const RAYNETCRM_URL = 'https://raynet.cz/api/v1/service/%s';
 
     const HTTP_METHOD_GET = 'GET';
     const HTTP_METHOD_PUT = 'PUT';
@@ -35,7 +35,14 @@ class RaynetCrmRestClient {
      * @return \Zend\Http\Response response
      */
     private function callRaynetcrmRestApi($serviceName, $method, $request) {
-        $client = new Client();
+        $client = new Client('', array(
+            'adapter' => 'Zend\Http\Client\Adapter\Curl',
+            'curloptions' => array(
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_SSL_VERIFYHOST => false
+            )
+        ));
         $client->setMethod($method);
         $client->setUri($this->buildUrl($serviceName));
         $client->setHeaders(array(
