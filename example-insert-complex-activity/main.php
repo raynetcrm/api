@@ -7,7 +7,7 @@
 require 'vendor/autoload.php';
 
 $activityFacade = new \raynet\CreateComplexActivityFacade('instanceName', 'userAccountEmail', 'userAccountApiKey');
-$activityFacade->createComplexActivityWithPersonOrCompanyContext(array(
+$activityFacade->createComplexTaskWithPersonOrCompanyContext(array(
     'deadline'          => '2014-09-01 00:00',
     'priority'          => 'DEFAULT',
     'title'             => 'Another activity title',

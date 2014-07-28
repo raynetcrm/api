@@ -24,7 +24,7 @@ class CreateComplexActivityFacade {
      * @param array $companyData array containing a company to be created, must contain at least: name, owner, rating, state, role and one address with a name specified.
      * @param $positionToCompany string a position for newly created relationship between company and person
      */
-    public function createComplexActivityWithPersonOrCompanyContext(array $activityData, array $personData, array $companyData, $positionToCompany) {
+    public function createComplexTaskWithPersonOrCompanyContext(array $activityData, array $personData, array $companyData, $positionToCompany) {
         $companyId = null;
         if ($this->isCompanyPresentInCompanyData($companyData)) {
             $companyId = $this->fRaynetCrmRestClient->findCompanyId($companyData['name']);
