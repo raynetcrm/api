@@ -1,4 +1,24 @@
-# Vytvoření nového zájemce ve Vašem RAYNET CRM
-Třída *Raynetcrm* obsahuje metodu **insertLead**, která příjímá asociativní pole. Kompletní struktura se nachází v příkladu. Jediným povinným klíčem v poli je **subject**. V případě úspěšného vytvoření zájemce metoda vrátí true v opačném případě false. Číselníkové hodnoty (např. Stát) zadávejte jako textové hodnoty, tyto hodnoty by v číselníku měli existovat před implementací API, vývojář je zodpovědný za jejich korektní vytvoření. V případě kdy ve volání bude obsažena číselníková hodnota, která v CRM neexistuje, aplikace toto pole nevyplní.
+Create a new lead in RAYNET CRM
+===============================
 
-Vyjma klasického vytvoření zájemce služba umožňuje po vytvoření entity zaslat notifikace pro Vámi určené uživatele RAYNET CRM. V případě potřeby zasílat notifikace se jako druhý parametr (nepovinný) metody **insertLead** předává pole uživatelů (přihlašovací e-maily) kteří budou notifikování. Třetí parametr metody (nepovinný) definuje text, který bude ve vytvořené notifikaci. Jestliže vyplníte pouze seznam e-mailu bez textu, RAYNET CRM vybere výchozí text pro notifikaci.
+```php
+$crm = new Raynetcrm($instanceName, $userName, $apiKey);
+$data = array( /* see example */ );
+
+$result = $crm->insertLead($data, array('notification-email@example.com'), 'Lead has been created via web form');
+```
+
+Method `insertLead` accepts three arguments:
+
+* `$data` associative array that will be used to create a new lead. The only
+	required field is _subject_. For all possible keys see the example in
+	_index.php_.
+* `$notifyUserList` array of usernames (emails) that will be notified on
+	successfull lead creattion.
+* `$notifyUserMessage` notification message
+
+Method returns true or false, depending on the success of the operation.
+
+Special care is required while handling the picklist values (category, source,
+...). Values submitted through the API should exist beforehand. Otherwise the
+field will not be saved.

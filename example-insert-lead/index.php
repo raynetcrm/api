@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label for="country">Country</label>
                 <select class="form-control" name="country" id="country">
-                    <option value="US">USA</option>
+                    <option value="US">United States</option>
                     <option value="CZ">Czech Republic</option>
                 </select>
             </div>

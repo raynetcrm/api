@@ -1,3 +1,14 @@
-# Vytvoření aktivity s navázanou firmou a osobou
-Tato velmi jednoduchá implementace zobrazuje možnosti vytvoření aktivity s navázanou firmou a osobou za pomocí RAYNET Cloud CRM REST API (https://s3-eu-west-1.amazonaws.com/static-raynet/webroot/api-doc.html).
-Example by měl vyhovět jako plug&play řešení, silně se ovšem doporučuje projít si kód pro pochopení základních principů a myšlenky pro logiku vytváření. Jedná se o standardní composer projekt a pro jeho spuštění je pouze zapotřebí spustit příkaz php composer.phar install.
+Create a new activity with linked account and person
+====================================================
+
+This simple implementation demonstrates the possibilities of activity insert
+API. Example shows, how to create a new activity with linked account and person
+using RAYNET CRM API (see
+https://s3-eu-west-1.amazonaws.com/static-raynet/webroot/api-doc.html for
+details).
+
+The code should suffice as plug & play solution, although we strongly recommend
+that you browse through the code in order to grasp the main principles.
+
+Code dependencies are managed via composer (https://getcomposer.org/). You can
+download them using the command _php composer.phar install_.
