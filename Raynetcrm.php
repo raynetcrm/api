@@ -22,7 +22,7 @@ class Raynetcrm {
      *
      * @param $instanceName instance name -> can be found in URL e.g. https://raynet.cz/myinstance -> myinstance
      * @param $userName
-     * @param $apiKey generated token from application (Users` profile -> Change security -> Reset new API key)
+     * @param $apiKey generated token from application (Users' profile -> Change security -> Reset new API key)
      */
     public function __construct($instanceName, $userName, $apiKey) {
         $this->fInstanceName = $instanceName;
@@ -51,7 +51,7 @@ class Raynetcrm {
     }
 
     /**
-     * Sends http base authed post request via curl, no exception is thrown
+     * Sends http base authed post request via curl, no exception is thrown.
      *
      * @param $url
      * @param array $data post data to be sent

@@ -4,10 +4,9 @@ include '../Raynetcrm.php';
 $result = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $instanceName = 'nazevinstance'; //Zde vlozte nazev Vasi instance
-    $userName = 'uzivatel@uzivatel.cz'; //Zde vlozte uzivatelske jmeno pro vytvareni zaznamu
-    $apiKey = 'apiKlic'; //Zde API klic uzivatele k vytvoreni zaznamu (Detail uzivatele -> Zmenit Opravneni -> Vygenerovat novy API klic)
-
+    $instanceName = 'nazevinstance'; // name of your RAYNET CRM
+    $userName = 'user@example.com'; // username
+    $apiKey = 'api-key'; // API key (from Users' profile -> Change security -> Reset new API key)
     $crm = new Raynetcrm($instanceName, $userName, $apiKey);
     $data = array(
         'subject' => $_REQUEST['subject'],
@@ -39,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         )
     );
 
-    $result = $crm->insertLead($data, array('emailknotifikaci@email'), 'Zájemce byl vytvořen z webu');
+    $result = $crm->insertLead($data, array('notification-email@example.com'), 'Lead has been created via web form');
 }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -52,135 +51,135 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body style="padding-bottom: 20px;">
     <div class="container"><div class="row"><div class="col-md-8">
 
-        <h1>Vytvoření zájemce v RAYNET CRM</h1>
+        <h1>Create a new lead in RAYNET CRM</h1>
 
         <?php if ($result === true): ?>
-            <div class="alert alert-success">Zájemce byl úspěšně vytvořen.</div>
+            <div class="alert alert-success">Lead has been successfully created.</div>
         <?php elseif ($result === false):?>
-            <div class="alert alert-danger">Nastala chyba při vytváření zájemce.</div>
+            <div class="alert alert-danger">An error has occurred.</div>
         <?php endif; ?>
 
         <form role="form" method="post">
-            <h2>Základní údaje</h2>
+            <h2>Basic Information</h2>
 
             <div class="form-group">
-                <label for="subject">Předmět</label>
+                <label for="subject">Subject</label>
                 <input class="form-control" type="text" name="subject" id="subject" />
             </div>
 
             <div class="form-group">
-                <label for="priority">Priorita</label>
+                <label for="priority">Priority</label>
                 <select class="form-control" name="priority" id="priority">
-                    <option value="MINOR">Nízká</option>
-                    <option value="DEFAULT">Normální</option>
-                    <option value="CRITICAL">Vysoká</option>
+                    <option value="MINOR">Low</option>
+                    <option value="DEFAULT">Normal</option>
+                    <option value="CRITICAL">High</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="company">Firma</label>
+                <label for="company">Account</label>
                 <input class="form-control" type="text" name="company" id="company" />
             </div>
 
             <div class="form-group">
-                <label for="firstName">Jméno</label>
+                <label for="firstName">Name</label>
                 <input class="form-control" type="text" name="firstName" id="firstName" />
             </div>
 
             <div class="form-group">
-                <label for="lastName">Příjmení</label>
+                <label for="lastName">Surname</label>
                 <input class="form-control" type="text" name="lastName" id="lastName" />
             </div>
 
             <div class="form-group">
-                <label for="source">Zdroj</label>
+                <label for="source">Source</label>
                 <select class="form-control" name="source" id="source">
-                    <option value="call centrum">call centrum</option>
-                    <option value="webový formulář">webový formulář</option>
+                    <option value="call center">call center</option>
+                    <option value="web form">web form</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="category">Kategorie</label>
+                <label for="category">Category</label>
                 <select class="form-control" name="category" id="category">
-                    <option value="automobilky">automobilky</option>
-                    <option value="vývoj software">vývoj software</option>
+                    <option value="food processing">food processing</option>
+                    <option value="software development">software development</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="note">Poznámka</label>
+                <label for="note">Note to Lead</label>
                 <textarea class="form-control" name="note" id="name"></textarea>
             </div>
 
             <h2>Adresa</h2>
 
             <div class="form-group">
-                <label for="street">Ulice</label>
+                <label for="street">Street</label>
                 <input class="form-control" type="text" name="street" id="street" />
             </div>
 
             <div class="form-group">
-                <label for="city">Město</label>
+                <label for="city">City</label>
                 <input class="form-control" type="text" name="city" id="city" />
             </div>
 
             <div class="form-group">
-                <label for="district">Kraj</label>
+                <label for="district">Region</label>
                 <input class="form-control" type="text" name="district" id="district" />
             </div>
 
             <div class="form-group">
-                <label for="postalCode">PSČ</label>
+                <label for="postalCode">Postal code</label>
                 <input class="form-control" type="text" name="postalCode" id="postalCode" />
             </div>
 
             <div class="form-group">
-                <label for="country">Stát</label>
+                <label for="country">Country</label>
                 <select class="form-control" name="country" id="country">
-                    <option value="Česká republika">Česká republika</option>
-                    <option value="Slovensko">Slovensko</option>
+                    <option value="US">USA</option>
+                    <option value="CZ">Czech Republic</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="businessRegion">Obchodní teritorium</label>
+                <label for="businessRegion">Business Territory</label>
                 <select class="form-control" name="businessRegion" id="businessRegion">
-                    <option value="Moravskoslezský kraj">Moravskoslezský kraj</option>
-                    <option value="Praha">Praha</option>
+                    <option value="World">World</option>
+                    <option value="Europe">Europe</option>
                 </select>
             </div>
 
-            <h2>Kontakty</h2>
+            <h2>Contact Details</h2>
 
             <div class="form-group">
-                <label for="firstPhone">Tel.1</label>
+                <label for="firstPhone">Phone 1</label>
                 <input class="form-control" type="text" name="firstPhone" id="firstPhone" />
             </div>
 
             <div class="form-group">
-                <label for="firstPhoneType">Tel.1 typ</label>
+                <label for="firstPhoneType">Phone 1 - type</label>
                 <select class="form-control" name="firstPhoneType" id="firstPhoneType">
-                    <option value="mobil">mobil</option>
-                    <option value="pevná linka">pevná linka</option>
+                    <option value="cellphone">cellphone</option>
+                    <option value="landline">landline</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="secondPhone">Tel.2</label>
+                <label for="secondPhone">Phone 2</label>
                 <input class="form-control" type="text" name="secondPhone" id="secondPhone" />
             </div>
 
             <div class="form-group">
-                <label for="secondPhoneType">Tel.2 typ</label>
+                <label for="secondPhoneType">Phone 2 - type</label>
                 <select class="form-control" name="secondPhoneType" id="secondPhoneType">
-                    <option value="mobil">mobil</option>
-                    <option value="pevná linka">pevná linka</option>
+                    <option value="cellphone">cellphone</option>
+                    <option value="landline">landline</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="email">E-mail</label>
+                <label for="email">Email</label>
                 <input class="form-control" type="text" name="email" id="email" />
             </div>
 
@@ -200,11 +199,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-                <label for="otherContacts">Ostatní kontakty</label>
+                <label for="otherContacts">Other contacts</label>
                 <textarea class="form-control" name="otherContacts" id="otherContacts"></textarea>
             </div>
 
-            <button class="btn btn-primary">Vytvořit zájemce</button>
+            <button class="btn btn-primary">Create lead</button>
         </form>
 
     </div></div></div>
