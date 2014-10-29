@@ -8,7 +8,7 @@
  */
 class Raynetcrm {
 
-    const RAYNETCRM_URL = 'https://raynet.cz/%s/api/v1/service/%s';
+    const RAYNETCRM_URL = 'https://raynet.cz/api/v2/%s/';
 
     const SUCCESS_KEY = 'success';
     const HTTP_OK = 200;
@@ -42,7 +42,7 @@ class Raynetcrm {
         $data['notifyUserList'] = $notifyUserList;
         $data['notifyMessage'] = $notifyUserMessage;
 
-        $response = $this->sendPost($this->buildUrl('insertLead'), $data);
+        $response = $this->sendPost($this->buildUrl('lead'), $data);
         if ($response !== false && $this->isSuccessResponse($response)) {
             return true;
         } else {
@@ -66,7 +66,8 @@ class Raynetcrm {
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
             curl_setopt($curl, CURLOPT_USERPWD, $this->buildAuthInfo());
             curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json; charset=UTF-8'
+                'Content-Type: application/json; charset=UTF-8',
+                'X-Instance-Name: ' . $this->fInstanceName
             ));
 
             $response = curl_exec($curl);
@@ -99,7 +100,7 @@ class Raynetcrm {
      * @return string
      */
     private function buildUrl($serviceName) {
-        return sprintf(self::RAYNETCRM_URL, $this->fInstanceName, $serviceName);
+        return sprintf(self::RAYNETCRM_URL, $serviceName);
     }
 
     /**
