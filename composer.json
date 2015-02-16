@@ -1,0 +1,12 @@
+{
+    "name": "raynetcrm/api",
+    "description": "Reference API implementation for RAYNET CRM integration",
+    "keywords": ["raynetcrm", "raynet", "crm", "api"],
+    "homepage": "https://raynetcrm.com",
+    "type": "library",
+    "license": ["Unlicense"],
+    "require": {
+	"php": ">= 5.3.0",
+	"ext-curl": "*"
+    }
+}
