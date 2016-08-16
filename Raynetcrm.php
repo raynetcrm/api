@@ -8,7 +8,11 @@
  */
 class Raynetcrm {
 
-    const RAYNETCRM_URL = 'https://raynet.cz/api/v2/%s/';
+    /**
+     * If your RAYNET CRM use domain app.raynetcrm.com, change URL to https://app.raynetcrm.com/api/v2/%s/
+     */
+    const RAYNETCRM_URL = 'https://app.raynet.cz/api/v2/%s/';
+
 
     const SUCCESS_KEY = 'success';
     const HTTP_OK = 200;
@@ -20,7 +24,7 @@ class Raynetcrm {
     /**
      * All records created through this API are owned by user specified through constructor.
      *
-     * @param $instanceName instance name -> can be found in URL e.g. https://raynet.cz/myinstance -> myinstance
+     * @param $instanceName instance name -> can be found in URL e.g. https://app.raynet.cz/myinstance -> myinstance
      * @param $userName
      * @param $apiKey generated token from application (Users' profile -> Change security -> Reset new API key)
      */
