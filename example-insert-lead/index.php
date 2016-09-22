@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'secondPhoneType' => $_REQUEST['secondPhoneType'],
             'email' => $_REQUEST['email'],
             'web' => $_REQUEST['web'],
-            'facebook' => $_REQUEST['facebook'],
             'fax' => $_REQUEST['fax'],
             'otherContacts' => $_REQUEST['otherContacts']
         )
