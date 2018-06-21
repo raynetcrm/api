@@ -1,12 +1,11 @@
 {
-    "name": "raynetcrm/api",
-    "description": "Reference API implementation for RAYNET CRM integration",
-    "keywords": ["raynetcrm", "raynet", "crm", "api"],
-    "homepage": "https://raynetcrm.com",
-    "type": "library",
-    "license": ["Unlicense"],
     "require": {
-	"php": ">= 5.3.0",
-	"ext-curl": "*"
+        "zendframework/zend-http": "2.2.*",
+        "zendframework/zend-json": "2.2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Raynet\\": "src/"
+        }
     }
 }

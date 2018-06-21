@@ -1,6 +1,6 @@
 <?
 
-namespace raynet;
+namespace Raynet\Client;
 
 
 class RaynetGenericException extends \Exception {

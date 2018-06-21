@@ -1,9 +1,9 @@
 <?
 
-namespace raynet;
-
-
+use Raynet\Client\RaynetCrmRestClient;
 use Zend\Http\Client;
+
+require_once "../../vendor/autoload.php";
 
 class CreateComplexActivityFacade {
 

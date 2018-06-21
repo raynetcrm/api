@@ -1,6 +1,6 @@
 <?php
 
-namespace raynet;
+namespace Raynet\Client;
 
 
 use Zend\Http\Client;
@@ -8,7 +8,7 @@ use Zend\Json\Json;
 
 class RaynetCrmRestClient {
 
-    const RAYNETCRM_URL = 'https://raynet.cz/api/v2/%s';
+    const RAYNETCRM_URL = 'https://app-devcloud-cz/api/v2/%s/';
 
     const HTTP_METHOD_GET = 'GET';
     const HTTP_METHOD_PUT = 'PUT';
@@ -110,16 +110,59 @@ class RaynetCrmRestClient {
         ));
     }
 
+    /**
+     * Gets codelist values
+     *
+     * @param $codelistName
+     * @return array list of records
+     */
+    public function getCodelistValues($codelistName) {
+        return $this->listRecords($codelistName, array());
+    }
+
+    /**
+     * Creates a new Person record
+     *
+     * @param $personData
+     * @return int personId
+     * @throws RaynetGenericException when an error occurs
+     */
     public function createPerson($personData) {
         return $this->createRecord('person', $personData);
     }
 
+    /**
+     * Creates a new Company record
+     *
+     * @param $companyData
+     * @return int companyId
+     * @throws RaynetGenericException when an error occurs
+     */
     public function createCompany($companyData) {
         return $this->createRecord('company', $companyData);
     }
 
+    /**
+     * Creates a new Lead record
+     *
+     * @param $leadData
+     * @return int leadId
+     * @throws RaynetGenericException when an error occurs
+     */
+    public function createLead($leadData) {
+        return $this->createRecord('lead', $leadData);
+    }
+
+    /**
+     * Creates a new Activity record of the requested type
+     *
+     * @param $activityType
+     * @param $activityData
+     * @return int activityId
+     * @throws RaynetGenericException when an error occurs
+     */
     public function createActivity($activityType, $activityData) {
-        $this->createRecord($activityType, $activityData);
+        return $this->createRecord($activityType, $activityData);
     }
 
     /**
@@ -155,6 +198,29 @@ class RaynetCrmRestClient {
 
             if ($body->success && $body->totalCount > 0) {
                 return $body->data[0]->id;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * An internal method utilizing RAYNET Cloud CRM REST API for retrieving list of records
+     *
+     * @param $entityName
+     * @param array $criteria
+     * @return array list of records
+     */
+    private function listRecords($entityName, array $criteria) {
+        $response = $this->callRaynetcrmRestApi($entityName, self::HTTP_METHOD_GET, $criteria);
+
+        if ($response->getStatusCode() === self::HTTP_CODE_OK) {
+            $body = Json::decode($response->getBody());
+
+            if ($body->success) {
+                return $body->data;
             } else {
                 return null;
             }
