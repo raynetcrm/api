@@ -5,9 +5,9 @@ use Raynet\Client\RaynetGenericException;
 
 require_once "../../vendor/autoload.php";
 
-$instanceName = 'pokus'; // name of your RAYNET CRM
-$userName = 'galik@raynet.cz'; // username
-$apiKey = 'backfire'; // API key (from Users' profile -> Change security -> Reset new API key)
+$instanceName = 'instanceName'; // name of your RAYNET CRM
+$userName = 'userName'; // user name (email address)
+$apiKey = 'apiKey'; // API key (from Application settings -> For developers -> API keys -> NEW API KEY)
 
 $crm = new RaynetCrmRestClient($instanceName, $userName, $apiKey);
 $result = null;

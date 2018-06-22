@@ -78,7 +78,7 @@ class RaynetCrmRestClient {
      */
     public function findPerson($email) {
         return $this->findRecordId('person', array(
-            'contactInfo.email' => '"' . $email . '"'
+            'contactInfo.email' => $email
         ));
     }
 
@@ -106,7 +106,7 @@ class RaynetCrmRestClient {
      */
     public function findCompanyId($name) {
         return $this->findRecordId('company', array(
-            'name' => '"' . $name  . '"'
+            'name' => $name
         ));
     }
 
@@ -175,11 +175,12 @@ class RaynetCrmRestClient {
      */
     private function createRecord($entityName, array $data) {
         $response = $this->callRaynetcrmRestApi($entityName, self::HTTP_METHOD_PUT, $data);
+        $body = Json::decode($response->getBody());
 
         if ($response->getStatusCode() === self::HTTP_CODE_CREATED) {
-            return Json::decode($response->getBody())->data->id;
+            return $body->data->id;
         } else {
-            throw new RaynetGenericException();
+            throw new RaynetGenericException($body->translatedMessage, $response->getStatusCode());
         }
     }
 

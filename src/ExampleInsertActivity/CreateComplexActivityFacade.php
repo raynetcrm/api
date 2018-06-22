@@ -1,7 +1,8 @@
-<?
+<?php
+
+namespace Raynet\ExampleInsertActivity;
 
 use Raynet\Client\RaynetCrmRestClient;
-use Zend\Http\Client;
 
 require_once "../../vendor/autoload.php";
 
@@ -23,6 +24,9 @@ class CreateComplexActivityFacade {
      * @param array $personData array containing a person to be created, must contain at least: firstName, lastName, owner, contactInfo -> email
      * @param array $companyData array containing a company to be created, must contain at least: name, owner, rating, state, role and one address with a name specified.
      * @param $positionToCompany string a position for newly created relationship between company and person
+     *
+     * @return int ID of the new task
+     * @throws \Raynet\Client\RaynetGenericException
      */
     public function createComplexTaskWithPersonOrCompanyContext(array $activityData, array $personData, array $companyData, $positionToCompany) {
         $companyId = null;
@@ -53,7 +57,21 @@ class CreateComplexActivityFacade {
             $activityData['person'] = $person;
         }
 
-        $this->fRaynetCrmRestClient->createActivity('task', $activityData);
+        if ($activityData['person'] === null && $activityData['company'] === null) {
+            $activityData['personal'] = true;
+        }
+
+        return $this->fRaynetCrmRestClient->createActivity('task', $activityData);
+    }
+
+    /**
+     * Gets codelist values
+     *
+     * @param $codelistName
+     * @return array list of records
+     */
+    public function getCodelistValues($codelistName) {
+        return $this->fRaynetCrmRestClient->getCodelistValues($codelistName);
     }
 
     /**
@@ -63,7 +81,7 @@ class CreateComplexActivityFacade {
      * @return bool
      */
     private function isPersonPresentInPersonData(array $personData) {
-        return true;
+        return !empty($personData['contactInfo']['email']) && !empty($personData['lastName']);
     }
 
     /**
@@ -73,7 +91,6 @@ class CreateComplexActivityFacade {
      * @return bool
      */
     private function isCompanyPresentInCompanyData(array $companyData) {
-        return true;
+        return !empty($companyData['name']);
     }
-
-} 
+}
