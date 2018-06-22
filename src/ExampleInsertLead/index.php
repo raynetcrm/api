@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'fax' => $_REQUEST['fax'],
             'otherContact' => $_REQUEST['otherContact']
         ),
-        'notificationEmailAddresses' => array('galik@raynet.cz'),
+        'notificationEmailAddresses' => array('email@domain.com'),
         'notificationMessage' => 'Lead has been created via web form'
     );
 

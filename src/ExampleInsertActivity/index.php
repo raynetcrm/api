@@ -28,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'resolver'          => 2
     );
 
-    $companyData = array(
-        'name'       => $_REQUEST['companyName'],
+    $accountData = array(
+        'name'       => $_REQUEST['accountName'],
         'owner'      => 2,
         'state'      => 'A_POTENTIAL',
         'role'       => 'A_SUBSCRIBER',
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $position = $_REQUEST['personPosition'];
 
     try {
-        $result = $crm->createComplexTaskWithPersonOrCompanyContext($activityData, $personData, $companyData, $position);
+        $result = $crm->createComplexTaskWithPersonOrCompanyContext($activityData, $personData, $accountData, $position);
     } catch (RaynetGenericException $e) {
         $result = -1;
         $resultMsg = $e->getMessage();
@@ -155,8 +155,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <h2>Account</h2>
             <div class="form-group">
-                <label for="companyName">Name</label>
-                <input class="form-control" type="text" name="companyName" id="companyName" />
+                <label for="accountName">Name</label>
+                <input class="form-control" type="text" name="accountName" id="accountName" />
             </div>
 
             <h2>Person</h2>
@@ -176,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-                <label for="personPosition">Position in Company</label>
+                <label for="personPosition">Position in the company</label>
                 <input class="form-control" type="text" name="personPosition" id="personPosition" />
             </div>
 
