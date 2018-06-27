@@ -180,7 +180,10 @@ class RaynetCrmRestClient {
         if ($response->getStatusCode() === self::HTTP_CODE_CREATED) {
             return $body->data->id;
         } else {
-            throw new RaynetGenericException($body->translatedMessage, $response->getStatusCode());
+            throw new RaynetGenericException(
+                $body->translatedMessage ? $body->translatedMessage : $body->message,
+                $response->getStatusCode()
+            );
         }
     }
 
@@ -190,20 +193,23 @@ class RaynetCrmRestClient {
      * @param $entityName
      * @param array $criteria
      * @return int id of found record
+     * @throws RaynetGenericException
      */
     private function findRecordId($entityName, array $criteria) {
         $response = $this->callRaynetcrmRestApi($entityName, self::HTTP_METHOD_GET, $criteria);
+        $body = Json::decode($response->getBody());
 
         if ($response->getStatusCode() === self::HTTP_CODE_OK) {
-            $body = Json::decode($response->getBody());
-
             if ($body->success && $body->totalCount > 0) {
                 return $body->data[0]->id;
             } else {
                 return null;
             }
         } else {
-            return null;
+            throw new RaynetGenericException(
+                $body->translatedMessage ? $body->translatedMessage : $body->message,
+                $response->getStatusCode()
+            );
         }
     }
 
@@ -213,20 +219,23 @@ class RaynetCrmRestClient {
      * @param $entityName
      * @param array $criteria
      * @return array list of records
+     * @throws RaynetGenericException
      */
     private function listRecords($entityName, array $criteria) {
         $response = $this->callRaynetcrmRestApi($entityName, self::HTTP_METHOD_GET, $criteria);
+        $body = Json::decode($response->getBody());
 
         if ($response->getStatusCode() === self::HTTP_CODE_OK) {
-            $body = Json::decode($response->getBody());
-
             if ($body->success) {
                 return $body->data;
             } else {
                 return null;
             }
         } else {
-            return null;
+            throw new RaynetGenericException(
+                $body->translatedMessage ? $body->translatedMessage : $body->message,
+                $response->getStatusCode()
+            );
         }
     }
 }

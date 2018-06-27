@@ -9,57 +9,57 @@ $instanceName = 'instanceName'; // name of your RAYNET CRM
 $userName = 'userName'; // user name (email address)
 $apiKey = 'apiKey'; // API key (from Application settings -> For developers -> API keys -> NEW API KEY)
 
-$crm = new CreateComplexActivityFacade($instanceName, $userName, $apiKey);
-$result = null;
+$resultCode = null;
 $resultMsg = null;
 
-$categoryValues = $crm->getCodelistValues('activityCategory');
+try {
+    $crm = new CreateComplexActivityFacade($instanceName, $userName, $apiKey);
+    $categoryValues = $crm->getCodelistValues('activityCategory');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $activityData = array(
-        'deadline'          => $_REQUEST['deadline'],
-        'priority'          => $_REQUEST['priority'],
-        'title'             => $_REQUEST['title'],
-        'category'          => $_REQUEST['category'],
-        'scheduledFrom'     => $_REQUEST['scheduledFrom'],
-        'scheduledTill'     => $_REQUEST['scheduledTill'],
-        'description'       => $_REQUEST['description'],
-        'owner'             => 2,
-        'resolver'          => 2
-    );
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $activityData = array(
+            'deadline'          => $_REQUEST['deadline'],
+            'priority'          => $_REQUEST['priority'],
+            'title'             => $_REQUEST['title'],
+            'category'          => $_REQUEST['category'],
+            'scheduledFrom'     => $_REQUEST['scheduledFrom'],
+            'scheduledTill'     => $_REQUEST['scheduledTill'],
+            'description'       => $_REQUEST['description'],
+            'owner'             => 2,
+            'resolver'          => 2
+        );
 
-    $accountData = array(
-        'name'       => $_REQUEST['accountName'],
-        'owner'      => 2,
-        'state'      => 'A_POTENTIAL',
-        'role'       => 'A_SUBSCRIBER',
-        'rating'     => 'C',
-        'addresses'  => array(
-            array(
-                'address' => array(
-                    'name' => 'Company Headquarters'
+        $accountData = array(
+            'name'       => $_REQUEST['accountName'],
+            'owner'      => 2,
+            'state'      => 'A_POTENTIAL',
+            'role'       => 'A_SUBSCRIBER',
+            'rating'     => 'C',
+            'addresses'  => array(
+                array(
+                    'address' => array(
+                        'name' => 'Company Headquarters'
+                    )
                 )
+            ),
+        );
+
+        $personData = array(
+            'firstName'   => $_REQUEST['firstName'],
+            'lastName'    => $_REQUEST['lastName'],
+            'owner'       => 2,
+            'contactInfo' => array(
+                'email' => $_REQUEST['personEmail']
             )
-        ),
-    );
+        );
 
-    $personData = array(
-        'firstName'   => $_REQUEST['firstName'],
-        'lastName'    => $_REQUEST['lastName'],
-        'owner'       => 2,
-        'contactInfo' => array(
-            'email' => $_REQUEST['personEmail']
-        )
-    );
+        $position = $_REQUEST['personPosition'];
 
-    $position = $_REQUEST['personPosition'];
-
-    try {
-        $result = $crm->createComplexTaskWithPersonOrCompanyContext($activityData, $personData, $accountData, $position);
-    } catch (RaynetGenericException $e) {
-        $result = -1;
-        $resultMsg = $e->getMessage();
+        $resultCode = $crm->createComplexTaskWithPersonOrCompanyContext($activityData, $personData, $accountData, $position);
     }
+} catch (RaynetGenericException $e) {
+    $resultCode = $e->getCode();
+    $resultMsg = $e->getMessage();
 }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -86,10 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <h1>Create a new task in RAYNET CRM</h1>
 
-        <?php if ($result !== null && $result > 0): ?>
-            <div class="alert alert-success">Task has been successfully created.</div>
-        <?php elseif ($result !== null && $result < 0):?>
-            <div class="alert alert-danger">An error has occurred: <div><?php echo $resultMsg; ?>.</div></div>
+        <?php if ($resultCode !== null && $resultCode <= 201): ?>
+            <div class="alert alert-success">Lead has been successfully created.</div>
+        <?php elseif ($resultCode !== null && $resultCode >= 400):?>
+            <div class="alert alert-danger">Error <?php echo $resultCode; ?>: <div><?php echo $resultMsg; ?></div></div>
         <?php endif; ?>
 
         <form role="form" method="post">

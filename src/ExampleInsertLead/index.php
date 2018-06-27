@@ -9,56 +9,58 @@ $instanceName = 'instanceName'; // name of your RAYNET CRM
 $userName = 'userName'; // user name (email address)
 $apiKey = 'apiKey'; // API key (from Application settings -> For developers -> API keys -> NEW API KEY)
 
-$crm = new RaynetCrmRestClient($instanceName, $userName, $apiKey);
-$result = null;
+$resultCode = null;
 $resultMsg = null;
 
-$territoryValues = $crm->getCodelistValues('territory');
-$contactSourceValues = $crm->getCodelistValues('contactSource');
-$leadCategoryValues = $crm->getCodelistValues('leadCategory');
-$telTypeValues = $crm->getCodelistValues('telType');
-$countryValues = $crm->getCodelistValues('country');
+try {
+    $crm = new RaynetCrmRestClient($instanceName, $userName, $apiKey);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = array(
-        'topic' => $_REQUEST['topic'],
-        'priority' => $_REQUEST['priority'],
-        'companyName' => $_REQUEST['companyName'],
-        'firstName' => $_REQUEST['firstName'],
-        'lastName' => $_REQUEST['lastName'],
-        'contactSource' => $_REQUEST['contactSource'],
-        'category' => $_REQUEST['category'],
-        'notice' => $_REQUEST['notice'],
-        'address' => array(
-            'street' => $_REQUEST['street'],
-            'city' => $_REQUEST['city'],
-            'province' => $_REQUEST['province'],
-            'zipCode' => $_REQUEST['zipCode'],
-            'country' => $_REQUEST['country'],
-        ),
-        'territory' => $_REQUEST['territory'],
-        'contactInfo' => array(
-            'tel1' => $_REQUEST['tel1'],
-            'tel2' => $_REQUEST['tel2'],
-            'tel1Type' => $_REQUEST['tel1Type'],
-            'tel2Type' => $_REQUEST['tel2Type'],
-            'email' => $_REQUEST['email'],
-            'www' => $_REQUEST['www'],
-            'fax' => $_REQUEST['fax'],
-            'otherContact' => $_REQUEST['otherContact']
-        ),
-        'notificationEmailAddresses' => array('email@domain.com'),
-        'notificationMessage' => 'Lead has been created via web form'
-    );
+    $territoryValues = $crm->getCodelistValues('territory');
+    $contactSourceValues = $crm->getCodelistValues('contactSource');
+    $leadCategoryValues = $crm->getCodelistValues('leadCategory');
+    $telTypeValues = $crm->getCodelistValues('telType');
+    $countryValues = $crm->getCodelistValues('country');
 
-    try {
-        $result = $crm->createLead($data);
-    } catch (RaynetGenericException $e) {
-        $result = -1;
-        $resultMsg = $e->getMessage();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $data = array(
+            'topic' => $_REQUEST['topic'],
+            'priority' => $_REQUEST['priority'],
+            'companyName' => $_REQUEST['companyName'],
+            'firstName' => $_REQUEST['firstName'],
+            'lastName' => $_REQUEST['lastName'],
+            'contactSource' => $_REQUEST['contactSource'],
+            'category' => $_REQUEST['category'],
+            'notice' => $_REQUEST['notice'],
+            'address' => array(
+                'street' => $_REQUEST['street'],
+                'city' => $_REQUEST['city'],
+                'province' => $_REQUEST['province'],
+                'zipCode' => $_REQUEST['zipCode'],
+                'country' => $_REQUEST['country'],
+            ),
+            'territory' => $_REQUEST['territory'],
+            'contactInfo' => array(
+                'tel1' => $_REQUEST['tel1'],
+                'tel2' => $_REQUEST['tel2'],
+                'tel1Type' => $_REQUEST['tel1Type'],
+                'tel2Type' => $_REQUEST['tel2Type'],
+                'email' => $_REQUEST['email'],
+                'www' => $_REQUEST['www'],
+                'fax' => $_REQUEST['fax'],
+                'otherContact' => $_REQUEST['otherContact']
+            ),
+            'notificationEmailAddresses' => array('email@domain.com'),
+            'notificationMessage' => 'Lead has been created via web form'
+        );
+
+        $resultCode = $crm->createLead($data);
     }
+} catch (RaynetGenericException $e) {
+    $resultCode = $e->getCode();
+    $resultMsg = $e->getMessage();
 }
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -71,10 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <h1>Create a new lead in RAYNET CRM</h1>
 
-        <?php if ($result !== null && $result > 0): ?>
+        <?php if ($resultCode !== null && $resultCode <= 201): ?>
             <div class="alert alert-success">Lead has been successfully created.</div>
-        <?php elseif ($result !== null && $result < 0):?>
-            <div class="alert alert-danger">An error has occurred: <div><?php echo $resultMsg; ?>.</div></div>
+        <?php elseif ($resultCode !== null && $resultCode >= 400):?>
+            <div class="alert alert-danger">Error <?php echo $resultCode; ?>: <div><?php echo $resultMsg; ?></div></div>
         <?php endif; ?>
 
         <form role="form" method="post">
