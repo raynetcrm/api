@@ -87,7 +87,7 @@ try {
         <h1>Create a new task in RAYNET CRM</h1>
 
         <?php if ($resultCode !== null && $resultCode <= 201): ?>
-            <div class="alert alert-success">Lead has been successfully created.</div>
+            <div class="alert alert-success">Task has been successfully created.</div>
         <?php elseif ($resultCode !== null && $resultCode >= 400):?>
             <div class="alert alert-danger">Error <?php echo $resultCode; ?>: <div><?php echo $resultMsg; ?></div></div>
         <?php endif; ?>
@@ -96,8 +96,8 @@ try {
             <h2>Basic Information</h2>
 
             <div class="form-group">
-                <label for="title">Title</label>
-                <input class="form-control" type="text" name="title" id="title" />
+                <label for="title">Title *</label>
+                <input class="form-control" type="text" name="title" id="title" required/>
             </div>
 
             <div class="form-group">
@@ -139,9 +139,9 @@ try {
             </div>
 
             <div class="form-group">
-                <label for="deadline">Deadline</label>
+                <label for="deadline">Deadline *</label>
                 <div class="input-group date" id="deadline-picker">
-                    <input type="text" name="deadline" id="deadline" class="form-control" />
+                    <input type="text" name="deadline" id="deadline" class="form-control" required/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>

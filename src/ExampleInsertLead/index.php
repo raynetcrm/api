@@ -83,8 +83,8 @@ try {
             <h2>Basic Information</h2>
 
             <div class="form-group">
-                <label for="topic">Subject</label>
-                <input class="form-control" type="text" name="topic" id="topic" />
+                <label for="topic">Subject *</label>
+                <input class="form-control" type="text" name="topic" id="topic" required/>
             </div>
 
             <div class="form-group">
