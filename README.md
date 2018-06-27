@@ -18,7 +18,7 @@ Requirements
 ------------
 
 * PHP 5 (tested with PHP 5.5, although older should also work)
-* Admin user account with API key (Application settings -> For developers -> API keys -> NEW API KEY)
+* Admin user account with API key (API key can be created here: Application settings -> For developers -> API keys -> NEW API KEY)
 
 Dependencies
 ------------
@@ -34,7 +34,9 @@ Create a new Lead with a notification
 
 Here we show how to implement a simple web form with an integration to the RAYNET CRM.
 The example implementation (_index.php_) allows to send a web form data to the CRM application
-and record them as a new Lead. Notification (about the new Lead) can be send as optional behaviour. 
+and record them as a new Lead. Notification (about the new Lead) can be send as optional behaviour.
+
+*Important notice* - in the _index.php_ file set the correct auth credentials first (instanceName, userName and apiKey)!
 
 This snippet of a php code is responsible for the whole transaction:
 ```php
@@ -70,6 +72,8 @@ If no relevant records are found, system will create new ones.
 
 The implementation is more complex than in the previous example, so an new facade *CreateComplexActivityFacade*
 was built upon the _RaynetCrmRestClient_ to make the usage a bit simpler. 
+
+*Important notice* - in the _index.php_ file set the correct auth credentials first (instanceName, userName and apiKey)!
 
 Again, a snippet of code follows:
 ```php
