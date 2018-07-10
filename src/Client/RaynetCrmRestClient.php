@@ -8,7 +8,7 @@ use Zend\Json\Json;
 
 class RaynetCrmRestClient {
 
-    const RAYNETCRM_URL = 'https://app-devcloud-cz/api/v2/%s/';
+    const RAYNETCRM_URL = 'https://app.raynet.cz/api/v2/%s/';
 
     const HTTP_METHOD_GET = 'GET';
     const HTTP_METHOD_PUT = 'PUT';
