@@ -12,7 +12,7 @@ We recommend to use the class *RaynetCrmRestClient*, which serves as a simple
 communication facade to the RAYNET CRM API.
 
 Reference documentation to the REST API can be found here:
-https://s3-eu-west-1.amazonaws.com/static-raynet/webroot/api-doc.html 
+https://app.raynetcrm.com/api/doc/index-en.html
 
 Requirements
 ------------
